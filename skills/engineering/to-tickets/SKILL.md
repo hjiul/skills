@@ -76,8 +76,18 @@ Do NOT close or modify any parent issue.
 
 **Status:** ready-for-agent
 
+**Complexity:** easy | normal | complex
+
 - [ ] Acceptance criterion 1
 - [ ] Acceptance criterion 2
+
+Complexity rubric (pick one; it routes the model that implements the ticket):
+
+- `easy`: a mechanical change with a clear diff and patterns to copy.
+- `complex`: crosses modules or touches design.
+- `normal`: the rest.
+
+Optionally add `**Model:**` and `**Effort:**` lines after Complexity to pin a model or effort for this ticket; omit them to let the class decide.
 
 </local-ticket-template>
 
