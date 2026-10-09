@@ -18,7 +18,7 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 You orchestrate; you never edit code yourself. Every code change, merge and fix goes through a subagent.
 
-Pass `model` and `effort` to the Agent tool on every spawn; no subagent inherits your model. Implementers take their ticket's resolved model (step 4). Helpers have defaults: **exploration subagent** Sonnet, **merger subagent** Haiku, the review fixer in step 8 Opus, each at effort `medium` by default. These are floors: raise a helper's model or effort when the spec warrants it (for example, a merge expected to need real conflict resolution).
+Pass `model` and `effort` to the Agent tool on every spawn; no subagent inherits your model. Implementers take their ticket's resolved model (step 4). Helpers have defaults: **exploration subagent** Sonnet, **merger subagent** Haiku, the `code-review` reviewer subagents in step 8 Opus, the review fixer in step 8 Opus, each at effort `medium` by default. These are floors: raise a helper's model or effort when the spec warrants it (for example, a merge expected to need real conflict resolution).
 
 ## Steps
 
