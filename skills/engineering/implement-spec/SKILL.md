@@ -53,19 +53,19 @@ Go back when a check fails: a ticket whose merge leaves it short of `done` goes 
 
 5. Use **implementer subagents** to implement each ticket, each in its own worktree on its own branch. Each implementer subagent:
    - confirms its worktree is based on the integration branch before starting, and resets onto it if not;
-   - claims its ticket before any other work: sets `**Status:** claimed` in the ticket file and saves (the tracker doc's **Claim** operation);
+   - claims its ticket before any other work (the tracker doc's **Claim** operation);
    - calls the Skill tool with `tdd` to build the ticket;
-   - closes its ticket through the tracker doc's **Close** operation (boxes the work earned ticked, `**Status:** done`, one `## Comments` line naming its branch and final commit), leaving a dogfood or hand-check box unticked with a comment saying why;
+   - closes its ticket through the tracker doc's **Close** operation, its `## Comments` line naming its branch and final commit;
    - merges the integration branch tip into its own branch before reporting done.
 
    Spawn each one with the model and effort resolved in step 4. When an implementer fails a ticket twice (reports it cannot finish, or its work fails the checks), raise the ticket one class (`easy` to `normal`, `normal` to `complex`), re-resolve it through step 4 and respawn. Explicit `**Model:**`/`**Effort:**` lines do not apply after a bump. If the ticket already ran at `complex`, stop and report it to the user instead.
 
-6. Once an **implementer subagent** completes, merge its work to the integration branch with a **merger subagent**. The merge sets the ticket `done`: the merger checks the ticket on the integration branch reads as the **Close** operation leaves it (earned boxes ticked, `**Status:** done`, the `## Comments` line) and fills in the status or the comment line when the implementer left them out. An acceptance box left unticked (other than a dogfood or hand-check box) is not a close: the ticket stays `claimed` and goes back to step 5.
+6. Once an **implementer subagent** completes, merge its work to the integration branch with a **merger subagent**. The merge sets the ticket `done`: the merger checks the ticket on the integration branch reads as the tracker doc's **Close** operation leaves it and fills in the status or the comment line when the implementer left them out. A ticket the Close rules leave short of `done` stays `claimed` and goes back to step 5.
 
 7. If this changes the **frontier** of available tickets, kick off more **implementer subagents** to work on the new tickets. This allows for maximum concurrency.
 
 8. Once all tickets are complete, call the Skill tool with `code-review` on the integration branch. Fix all issues raised by the code review in a single implementer subagent, the review fixer, spawned with the `reviewFixer` helper entry (not a ticket class). Then run `code-review` again; repeat review and fix until a review comes back clean.
 
-9. If a draft PR exists, mark it ready for review. Otherwise, check every ticket is closed through the tracker doc's **Close** operation (`**Status:** done` with its earned boxes ticked, or `wontfix` with a reason), have a subagent close any that are not, and report the integration branch. When the spec carries `**Bench:** true`, the integration branch is never merged into `main`, by you or by anyone you spawn: the run ends with the branch reported.
+9. If a draft PR exists, mark it ready for review. Otherwise, check every ticket is closed through the tracker doc's **Close** or **Won't fix** operation, have a subagent close any that are not, and report the integration branch. When the spec carries `**Bench:** true`, the integration branch is never merged into `main`, by you or by anyone you spawn: the run ends with the branch reported.
 
 10. Clean up all **implementer subagent** worktrees.

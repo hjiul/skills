@@ -37,7 +37,7 @@ Call the Skill tool with "code-review" to review the work. Done when it raises n
 
 ## 5. Close the issue
 
-When working a ticket, close it through the issue tracker doc's **Close** operation (`docs/agents/issue-tracker.md`, "Implementation operations"): tick each acceptance box the work earned, set `**Status:** done`, and append one line under `## Comments` naming the branch or commit. A box the work did not earn is not a close: the status stays and the comment says why. With no ticket, skip this step.
+When working a ticket, close it through the issue tracker doc's **Close** operation: earned boxes ticked, status `done`, a `## Comments` line. The rules (what an unticked box means, the hand-check and dogfood exception) live in `docs/agents/issue-tracker.md`, "Implementation operations". With no ticket, skip this step.
 
 ## 6. Commit
 
