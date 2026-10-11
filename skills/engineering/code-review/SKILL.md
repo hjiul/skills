@@ -57,7 +57,7 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 
 ### 4. Spawn both sub-agents in parallel
 
-Issue both sub-agent calls together, in the foreground, and aggregate the reports they return.
+Issue both sub-agent calls together, in the foreground, and aggregate the reports they return. Pass `model` and `effort` on both: the `helpers.reviewer` entry of `brain3 models --json` when that command exists, otherwise Opus at effort `medium`. Never let a reviewer inherit your model.
 
 **Standards sub-agent prompt** should include:
 
