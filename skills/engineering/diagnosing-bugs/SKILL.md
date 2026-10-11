@@ -18,6 +18,17 @@ If the redacted output is not enough to diagnose the bug, say so and ask the use
 
 ## Phase 1: Build a feedback loop
 
+Copy this checklist and tick it as each phase completes:
+
+```
+- [ ] Phase 1: a tight loop goes red on this bug
+- [ ] Phase 2: reproduced and minimised
+- [ ] Phase 3: hypotheses ranked and shown
+- [ ] Phase 4: instrumented one variable at a time
+- [ ] Phase 5: regression test red, then green
+- [ ] Phase 6: cleanup done
+```
+
 **This is the skill.** Everything else is mechanical. If you have a **tight** pass/fail signal for the bug (one that goes red on _this_ bug), you will find the cause; bisection, hypothesis-testing, and instrumentation all just consume it. If you don't have one, no amount of staring at code will save you.
 
 Spend disproportionate effort here. **Be aggressive. Be creative. Refuse to give up.**
@@ -137,3 +148,5 @@ Required before declaring done:
 - [ ] All `[DEBUG-...]` instrumentation removed (`grep` the prefix)
 - [ ] Throwaway prototypes deleted (or moved to a clearly-marked debug location)
 - [ ] The hypothesis that turned out correct is stated in the commit / PR message, so the next debugger learns
+
+If any box fails, return to the phase that owns it; the original Phase 1 loop is the final judge.

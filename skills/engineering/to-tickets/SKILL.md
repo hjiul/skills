@@ -76,6 +76,8 @@ Do NOT close or modify any parent issue.
 
 **Status:** ready-for-agent
 
+Lifecycle: `ready-for-agent`, then `claimed` (set before any work), then `done` or `wontfix`.
+
 **Complexity:** easy | normal | complex
 
 - [ ] Acceptance criterion 1

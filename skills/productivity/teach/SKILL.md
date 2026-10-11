@@ -7,6 +7,15 @@ argument-hint: "What would you like to learn about?"
 
 The user has asked you to teach them something. This is a stateful request - they intend to learn the topic over multiple sessions.
 
+## Each session
+
+1. Read `MISSION.md`, `NOTES.md`, `./learning-records/` and `RESOURCES.md`. If the mission is missing or vague, question the user and write `MISSION.md` first (see [The Mission](#the-mission)).
+2. Fill gaps in `RESOURCES.md` before teaching from memory.
+3. Pick one target: the thing the user asked for, or the most relevant one in their [zone of proximal development](#zone-of-proximal-development).
+4. Read `./assets/` and build the lesson from its components; save it to `./lessons/`.
+5. Write the reference documents and glossary entries the lesson earned, and a learning record for any non-obvious insight.
+6. Record new preferences in `NOTES.md`.
+
 ## Teaching Workspace
 
 Treat the current directory as a teaching workspace. Workspace paths (`./lessons/` and the rest) resolve from the directory `/teach` was run in; only the `*-FORMAT.md` links resolve from this skill's folder. The state of their learning is captured in this directory in several files:
@@ -133,7 +142,7 @@ Some learning topics lend themselves to reference:
 - Exercises and routines for fitness
 - Glossaries for any topic with its own nomenclature
 
-Glossaries, in particular, are an essential reference. Once one is created, it should be adhered to in every lesson.
+Glossaries, in particular, are an essential reference. Once one is created, it should be adhered to in every lesson. Keep it in `GLOSSARY.md`, in the format of [GLOSSARY-FORMAT.md](./GLOSSARY-FORMAT.md).
 
 ## `NOTES.md`
 

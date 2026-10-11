@@ -16,6 +16,19 @@ This is a prompt-driven skill, not a deterministic script. Explore, present what
 
 ## Process
 
+Copy this checklist and tick it as you go:
+
+```
+- [ ] Repo explored (step 1)
+- [ ] Each section answered (step 2)
+- [ ] Draft approved (step 3)
+- [ ] `## Agent skills` block written once (step 4)
+- [ ] `docs/agents/` files written (step 4)
+- [ ] Configured labels exist on GitHub/GitLab, when Section B ran (step 4)
+```
+
+If the user edits the draft, return to step 3.
+
 ### 1. Explore
 
 Look at the current repo to understand its starting state. Read whatever exists; don't assume:

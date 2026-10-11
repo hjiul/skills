@@ -116,3 +116,5 @@ getUser(fromAny({ body: { id: 123 } }));
    - [ ] Replace `as unknown as Type` with `fromAny()`
    - [ ] Add imports from `@total-typescript/shoehorn`
    - [ ] Run type check to verify
+
+If the type check fails, fix that file's migration and re-run it; finish only when the type check is clean and the grep above finds no ` as [A-Z]` left in test files.
