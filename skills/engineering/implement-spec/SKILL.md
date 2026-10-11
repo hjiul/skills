@@ -8,7 +8,7 @@ You have been provided a spec. This spec should have tickets associated with it,
 
 The issue tracker should have been provided to you. If not, tell the user to run `/setup-matt-pocock-skills`.
 
-The goal is the entire spec implemented on a single **integration branch**, with every ticket closed through the issue tracker's **Close** operation (`docs/agents/issue-tracker.md`, "Implementation operations").
+The goal is the entire spec implemented on a single **integration branch**, with every ticket closed through the issue tracker's **Close** operation (`docs/agents/issue-tracker.md`, "Implementation operations"), then landed on `main`. This run is the whole life of the feature folder: it lands its own branch, so `/finalize` (the close-out for folders built one `/solve` session per issue) never follows it.
 
 The tickets are not a list of steps. They are a **task graph** with blocking relationships between them. This means there is always a **frontier** of tickets which are ready to be grabbed.
 
@@ -33,17 +33,18 @@ Copy this checklist into your reply and tick it as you go:
 - [ ] 6. Merge each finished ticket, ticket set to done
 - [ ] 7. Frontier changed: back to 5 for the new tickets
 - [ ] 8. Code review on the integration branch, repeated until clean
-- [ ] 9. Every ticket closed, branch reported (or draft PR ready)
-- [ ] 10. Clean up the worktrees
+- [ ] 9. Every ticket closed (or draft PR ready)
+- [ ] 10. Land the branch on main, spec set to done
+- [ ] 11. Clean up the worktrees and branches
 ```
 
-Go back when a check fails: a ticket whose merge leaves it short of `done` goes back to step 5; a frontier with tickets left goes back to step 5; a review with findings goes back through its fix to step 8; step 9 starts only when every ticket is `done` or `wontfix`.
+Go back when a check fails: a ticket whose merge leaves it short of `done` goes back to step 5; a frontier with tickets left goes back to step 5; a review with findings goes back through its fix to step 8; step 9 starts only when every ticket is `done` or `wontfix`; checks failing in step 10 go to the review fixer and back to step 10.
 
 1. Read the spec and tickets to understand the task graph.
 
 2. (optional) Use an **exploration subagent** to conduct any exploration required by the tickets - relevant codebase files or external documentation. Ensure the exploration subagent can save files - it should save its markdown notes in a directory outside the repo, accessible by all future subagents. This lets **implementer subagents** focus on implementation rather than exploration.
 
-3. Create the integration branch. If the issue tracker closes work through PRs, or the user asks for one, open a draft PR after the first merge in step 6 (a branch with no commits ahead of main can't open one), marked as closing the spec and tickets.
+3. Create the integration branch, named after the feature folder (`git branch <feature> main`, the tracker doc's "Branches and worktrees"). If the issue tracker closes work through PRs, or the user asks for one, open a draft PR after the first merge in step 6 (a branch with no commits ahead of main can't open one), marked as closing the spec and tickets.
 
 4. Resolve each ticket's model and effort before spawning its implementer:
    - read the ticket's `**Model:**`, `**Effort:**` and `**Complexity:**` lines;
@@ -66,6 +67,8 @@ Go back when a check fails: a ticket whose merge leaves it short of `done` goes 
 
 8. Once all tickets are complete, call the Skill tool with `code-review` on the integration branch. Fix all issues raised by the code review in a single implementer subagent, the review fixer, spawned with the `reviewFixer` helper entry (not a ticket class). Then run `code-review` again; repeat review and fix until a review comes back clean.
 
-9. If a draft PR exists, mark it ready for review. Otherwise, check every ticket is closed through the tracker doc's **Close** or **Won't fix** operation, have a subagent close any that are not, and report the integration branch. When the spec carries `**Bench:** true`, the integration branch is never merged into `main`, by you or by anyone you spawn: the run ends with the branch reported.
+9. If a draft PR exists, mark it ready for review; the PR's merge replaces step 10. Otherwise, check every ticket is closed through the tracker doc's **Close** or **Won't fix** operation, and have a subagent close any that are not.
 
-10. Clean up all **implementer subagent** worktrees.
+10. Land the integration branch with a **merger subagent**, following `/finalize`'s steps 2 to 4 and 8 to 10 (`.claude/skills/finalize/SKILL.md`) with the integration branch as `<feature>`: bring `main` in and rerun the checks, set the spec's `**Status:** done`, carry the board copies over and restore them, merge into `main` with `--no-ff`, push. Steps 5 to 7 there are this run's step 8, already clean, so the merge goes ahead without asking (finalize when clean) and the report comes after. A check failing twice, a conflict the merger cannot resolve, or another session's files blocking the merge stop the run and go to the user. When the spec carries `**Bench:** true`, skip this step: the integration branch is never merged into `main`, by you or by anyone you spawn, and the run ends with the branch reported.
+
+11. Clean up every worktree the run created, then delete the ticket branches and the integration branch once `main` holds them (`git branch -d`). On a bench run, keep the integration branch.
