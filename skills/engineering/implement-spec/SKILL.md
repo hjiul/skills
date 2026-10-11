@@ -47,6 +47,6 @@ Pass `model` and `effort` to the Agent tool on every spawn; no subagent inherits
 
 8. Once all tickets are complete, call the Skill tool with `code-review` on the integration branch. Fix all issues raised by the code review in a single implementer subagent, the review fixer, spawned with the `reviewFixer` helper entry (not a ticket class).
 
-9. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes work, and report the integration branch.
+9. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes work, and report the integration branch. When the spec carries `**Bench:** true`, the integration branch is never merged into `main`, by you or by anyone you spawn: the run ends with the branch reported.
 
 10. Clean up all **implementer subagent** worktrees.
