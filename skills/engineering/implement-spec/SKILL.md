@@ -16,7 +16,7 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 **Implementer subagents** should be run in the background where possible for maximum concurrency.
 
-You orchestrate; you never edit code yourself. Every code change, merge and fix goes through a subagent.
+You orchestrate; you never edit code yourself. Every code change, real merge and fix goes through a subagent; the one git command you run yourself is step 6's fast-forward.
 
 Pass `model` and `effort` to the Agent tool on every spawn; no subagent inherits your model. Implementers take their ticket's resolved model (step 4). Helpers take theirs from the `helpers` key of the same `brain3 models --json` output: `exploration` for the **exploration subagent**, `merger` for the **merger subagent**, `reviewFixer` for the review fixer in step 8; the `code-review` skill resolves its own reviewers (`reviewer`). When the command is unavailable, fall back to exploration Sonnet, merger Haiku, review fixer Opus, each at effort `medium`. These are floors: raise a helper's model or effort when the spec warrants it (for example, a merge expected to need real conflict resolution).
 
@@ -55,13 +55,13 @@ Go back when a check fails: a ticket whose merge leaves it short of `done` goes 
 5. Use **implementer subagents** to implement each ticket, each in its own worktree on its own branch. Each implementer subagent:
    - confirms its worktree is based on the integration branch before starting, and resets onto it if not;
    - claims its ticket before any other work (the tracker doc's **Claim** operation);
-   - calls the Skill tool with `tdd` to build the ticket;
+   - weighs the ticket (the tracker doc's **Weight**) and calls the Skill tool with `tdd` only when it is logic; docs and light code are built directly;
    - closes its ticket through the tracker doc's **Close** operation, its `## Comments` line naming its branch and final commit;
    - merges the integration branch tip into its own branch before reporting done.
 
    Spawn each one with the model and effort resolved in step 4. When an implementer fails a ticket twice (reports it cannot finish, or its work fails the checks), raise the ticket one class (`easy` to `normal`, `normal` to `complex`), re-resolve it through step 4 and respawn. Explicit `**Model:**`/`**Effort:**` lines do not apply after a bump. If the ticket already ran at `complex`, stop and report it to the user instead.
 
-6. Once an **implementer subagent** completes, merge its work to the integration branch with a **merger subagent**. The merge sets the ticket `done`: the merger checks the ticket on the integration branch reads as the tracker doc's **Close** operation leaves it and fills in the status or the comment line when the implementer left them out. A ticket the Close rules leave short of `done` stays `claimed` and goes back to step 5.
+6. Once an **implementer subagent** completes, fast-forward the integration branch to its branch yourself (`git fetch . <ticket-branch>:<integration>`; the implementer merged the integration tip first, so this is a fast-forward), then read the ticket there (`git show <integration>:<ticket path>`): it must read as the tracker doc's **Close** operation leaves it. Spawn a **merger subagent** only when the fetch refuses (the integration branch moved: a real merge) or the ticket needs its status or comment line filled in. A ticket the Close rules leave short of `done` stays `claimed` and goes back to step 5.
 
 7. If this changes the **frontier** of available tickets, kick off more **implementer subagents** to work on the new tickets. This allows for maximum concurrency.
 

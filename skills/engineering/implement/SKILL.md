@@ -12,7 +12,7 @@ Copy this checklist into your reply and tick it as you go:
 
 ```
 - [ ] 1. Fetch the ticket, state its title
-- [ ] 2. Build it with tdd
+- [ ] 2. Build it, by its weight
 - [ ] 3. Suite and typecheck green
 - [ ] 4. Code review without hard findings
 - [ ] 5. Close the issue
@@ -23,13 +23,13 @@ Copy this checklist into your reply and tick it as you go:
 
 If the user passes a ticket reference, fetch it from the issue tracker and state its title in one line before starting. If the reference is ambiguous, ask. When the work comes from a spec or the conversation with no ticket, state what you are building instead.
 
-## 2. Build it with tdd
+## 2. Build it, by its weight
 
-Call the Skill tool with "tdd" where possible, at pre-agreed seams. Run typechecking and single test files regularly as you go.
+Weigh the work first (the issue tracker doc's **Weight**, `docs/agents/issue-tracker.md`, "Implementation operations"): docs, light code or logic. Logic: call the Skill tool with "tdd" at pre-agreed seams. Docs and light code: build directly. Run typechecking and single test files regularly as you go.
 
 ## 3. Suite and typecheck green
 
-Run the typecheck and the full test suite. Done when both pass. Red: go back to step 2 and fix the cause.
+Run the typecheck and the full test suite (docs-only work: `brain3 lint` instead). Done when both pass. Red: go back to step 2 and fix the cause.
 
 ## 4. Code review without hard findings
 
