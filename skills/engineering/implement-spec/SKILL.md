@@ -16,7 +16,7 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 **Implementer subagents** should be run in the background where possible for maximum concurrency.
 
-You orchestrate; you never edit code yourself. Every code change, real merge and fix goes through a subagent; the one git command you run yourself is step 6's fast-forward.
+You orchestrate; you never edit code yourself. Every code change, real merge and fix goes through a subagent; the git you run yourself is step 6's fast-forward and its read.
 
 Pass `model` and `effort` to the Agent tool on every spawn; no subagent inherits your model. Implementers take their ticket's resolved model (step 4). Helpers take theirs from the `helpers` key of the same `brain3 models --json` output: `exploration` for the **exploration subagent**, `merger` for the **merger subagent**, `reviewFixer` for the review fixer in step 8; the `code-review` skill resolves its own reviewers (`reviewer`). When the command is unavailable, fall back to exploration Sonnet, merger Haiku, review fixer Opus, each at effort `medium`. These are floors: raise a helper's model or effort when the spec warrants it (for example, a merge expected to need real conflict resolution).
 
@@ -61,11 +61,11 @@ Go back when a check fails: a ticket whose merge leaves it short of `done` goes 
 
    Spawn each one with the model and effort resolved in step 4. When an implementer fails a ticket twice (reports it cannot finish, or its work fails the checks), raise the ticket one class (`easy` to `normal`, `normal` to `complex`), re-resolve it through step 4 and respawn. Explicit `**Model:**`/`**Effort:**` lines do not apply after a bump. If the ticket already ran at `complex`, stop and report it to the user instead.
 
-6. Once an **implementer subagent** completes, fast-forward the integration branch to its branch yourself (`git fetch . <ticket-branch>:<integration>`; the implementer merged the integration tip first, so this is a fast-forward), then read the ticket there (`git show <integration>:<ticket path>`): it must read as the tracker doc's **Close** operation leaves it. Spawn a **merger subagent** only when the fetch refuses (the integration branch moved: a real merge) or the ticket needs its status or comment line filled in. A ticket the Close rules leave short of `done` stays `claimed` and goes back to step 5.
+6. Once an **implementer subagent** completes, fast-forward the integration branch to its branch yourself (`git fetch . <ticket-branch>:<integration>`; the implementer merged the integration tip first, so this is a fast-forward), then read the ticket there (`git show <integration>:<ticket path>`): it must read as the tracker doc's **Close** operation leaves it. The fetch also refuses while a worktree has the integration branch checked out: remove that worktree when its work is merged, else wait for it, then fetch again. Spawn a **merger subagent** only when the fetch refuses as not a fast-forward (the integration branch moved: a real merge) or the ticket needs its status or comment line filled in. A ticket the Close rules leave short of `done` stays `claimed` and goes back to step 5.
 
 7. If this changes the **frontier** of available tickets, kick off more **implementer subagents** to work on the new tickets. This allows for maximum concurrency.
 
-8. Once all tickets are complete, call the Skill tool with `code-review` on the integration branch. Fix all issues raised by the code review in a single implementer subagent, the review fixer, spawned with the `reviewFixer` helper entry (not a ticket class). Then run `code-review` again; repeat review and fix until a review comes back clean.
+8. Once all tickets are complete, call the Skill tool with `code-review` on the integration branch (a docs-only diff is reviewed as the tracker doc's **Weight** says). Fix all issues raised by the code review in a single implementer subagent, the review fixer, spawned with the `reviewFixer` helper entry (not a ticket class). Then run `code-review` again; repeat review and fix until a review comes back clean.
 
 9. If a draft PR exists, mark it ready for review; the PR's merge replaces step 10. Otherwise, check every ticket is closed through the tracker doc's **Close** or **Won't fix** operation, and have a subagent close any that are not.
 

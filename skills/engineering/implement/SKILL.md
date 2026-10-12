@@ -33,7 +33,7 @@ Run the typecheck and the full test suite (docs-only work: `brain3 lint` instead
 
 ## 4. Code review without hard findings
 
-Call the Skill tool with "code-review" to review the work. Done when it raises no hard finding (a bug, a broken standard, a gap against the ticket). Findings: fix them, then go back to step 3, since a fix can break the suite.
+Call the Skill tool with "code-review" to review the work (docs-only work is reviewed as **Weight** says). Done when it raises no hard finding (a bug, a broken standard, a gap against the ticket). Findings: fix them, then go back to step 3, since a fix can break the suite.
 
 ## 5. Close the issue
 
