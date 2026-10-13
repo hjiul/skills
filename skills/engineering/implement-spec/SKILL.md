@@ -71,4 +71,6 @@ Go back when a check fails: a ticket whose merge leaves it short of `done` goes 
 
 10. Land the integration branch with a **merger subagent**, following `/finalize`'s steps 2 to 4 and 8 to 10 (`.claude/skills/finalize/SKILL.md`) with the integration branch as `<feature>`: bring `main` in and rerun the checks, set the spec's `**Status:** done`, carry the board copies over and restore them, merge into `main` with `--no-ff`, push. Steps 5 to 7 there are this run's step 8, already clean, so the merge goes ahead without asking (finalize when clean) and the report comes after. A check failing twice, a conflict the merger cannot resolve, or another session's files blocking the merge stop the run and go to the user. When the spec carries `**Bench:** true`, skip this step: the integration branch is never merged into `main`, by you or by anyone you spawn, and the run ends with the branch reported.
 
+    When a ticket deploys from `main` (Coolify builds the GitHub `main` tip), land the integration branch the same way before that ticket starts, without setting the spec's status; the final landing follows the last ticket. Never on a bench run.
+
 11. Clean up every worktree the run created, then delete the ticket branches and the integration branch once `main` holds them (`git branch -d`). On a bench run, keep the integration branch.
