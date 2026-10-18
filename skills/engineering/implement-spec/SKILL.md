@@ -70,7 +70,7 @@ Go back when a check fails: a ticket whose merge leaves it short of `done` goes 
 
    **The pending list for the user**: when tickets leave steps for the user (a `ready-for-human` ticket filed mid-run, a Deploy to press), post the list once, each item a complete command or click with its ticket path, and re-post it only when it changes. A ticket blocked by one of them is skipped, not spawned, and named in that list; the run goes on with the rest of the frontier. Never ask the user to rule on a ticket whose own text already answers it (a `wontfix` ticket, an idea file).
 
-7. If this changes the **frontier** of available tickets, kick off more **implementer subagents** to work on the new tickets. This allows for maximum concurrency.
+7. If this changes the **frontier** of available tickets, kick off more **implementer subagents** to work on the new tickets. This allows for maximum concurrency. One ordering the graph may not show: a ticket that adds a lint finding over data another ticket migrates runs after it, or the finding ships inside the migration ticket (tracker-reshape 03, 2026-10-18, made `brain3 lint` red on the real tree for five tickets, each committing with `--no-verify` and losing the hook's protection meanwhile).
 
 8. Once all tickets are complete, call the Skill tool with `code-review` on the integration branch (a docs-only diff is reviewed as the tracker doc's **Weight** says). Fix all issues raised by the code review in a single implementer subagent, the review fixer, spawned with the `reviewFixer` helper entry (not a ticket class). Then run `code-review` again; repeat review and fix until a review comes back clean.
 
