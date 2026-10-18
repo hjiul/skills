@@ -59,7 +59,9 @@ Iterate until the user approves the breakdown.
 
 Publish the approved tickets. **How** depends on the tracker `/setup-matt-pocock-skills` configured; the tickets are the same either way, only the shape of the blocking edges changes:
 
-- **Local files** → write one file per ticket under `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01` in dependency order (blockers first). Each file's "Blocked by" lists the numbers/titles it depends on. Use the per-ticket file template below: one ticket per file, never a single combined file.
+- **Local files** → write one file per ticket under `<folder>/issues/<NN>-<slug>.md`, where `<folder>` is the spec's feature folder (`projects/<project>/.scratch/<feature-slug>/`, or `groups/<group>/.scratch/<feature-slug>/` when the work spans several projects of a group), numbered from `01` in dependency order (blockers first). Each file's "Blocked by" lists the numbers/titles it depends on. Use the per-ticket file template below: one ticket per file, never a single combined file. The folder is a feature folder: its `spec.md` sits beside `issues/` (`docs/agents/issue-tracker.md`, "Folders and project groups"). A step only the user can take that the spec already names (create a key, press Deploy before a ticket can run) is a ticket of its own in the folder, `**Status:** ready-for-human`, numbered in dependency order with the tickets it unblocks listing it in their "Blocked by": Implement lights only once the user has done it (`docs/agents/issue-tracker.md`, "A step only the user can take").
+- **Ideas kept for later** → never a ticket of the feature. Each goes to the group's `ideas` standing folder, `groups/<group>/.scratch/ideas/issues/<NN>-<slug>.md` (next free number there), with `Status: idea` and its `**Project:**` line, and the spec's "ideas kept for later" section points at the file. An orchestrator is never asked to rule on one.
+- **Acceptance boxes** name evidence an agent produces (a test, a read-back, a headless shot). A preview box (mockup, prototype, a prompt line shown first) only when the user asked for the preview in the grilling or the spec. Never "checked by hand", never a live call: a behaviour only a live call proves is a ticket the work files in the group's `live-checks` standing folder (`groups/<group>/.scratch/live-checks/issues/`, with its `**Project:**` and `**From:**` lines), and the ticket's box is "the live-check ticket exists".
 - **A real issue tracker (GitHub, Linear, …)** → publish one issue per ticket in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the platform's native blocking relationship where it has one; otherwise set each ticket's "Blocked by" to the blocking issues. If the source was an existing issue, make each ticket its sub-issue (tracker doc's operation). Apply the `ready-for-agent` triage label unless instructed otherwise; the tickets are agent-grabbable by construction.
 
 Work the **frontier**: any ticket whose blockers are all done. For a purely linear chain that means top to bottom.
@@ -76,7 +78,7 @@ Do NOT close or modify any parent issue.
 
 **Status:** ready-for-agent
 
-Lifecycle: `ready-for-agent`, then `claimed` (set before any work), then `done` or `wontfix`.
+Lifecycle: `ready-for-agent`, then `claimed` (set before any work), then `done` or `wontfix`. A step only the user can take is a ticket of the same template with `**Status:** ready-for-human` and the step as a complete command or click.
 
 **Complexity:** easy | normal | complex
 

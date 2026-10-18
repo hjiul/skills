@@ -36,3 +36,4 @@ When the shape of that interface is itself in question (how deep the module is, 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
 - **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+- **The loop runs one test file.** Red and green are read from `node --test <the one file>` (or the runner's single-file form), a tenth of a second; the package suite runs before each commit, the root suite once when the ticket closes (`docs/agents/implementer-brief.md`, "Test by moment"). A suite in the loop is the slowest check paid at every step: the V5 reshape run of 2026-10-15 ran the root suite 33 times inside its implementers for 25 passes and 0 failures.
