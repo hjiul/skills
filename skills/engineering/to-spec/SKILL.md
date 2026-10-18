@@ -18,7 +18,11 @@ Check with the user that these seams match their expectations.
 
 3. Write the spec using the template below, then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
 
+   Set its `**Complexity:**` line to the class of the whole build; it picks the model the Implement session runs on (`complex` when the line is missing). The rubric is the tickets' (`to-tickets`): `easy` a mechanical change with patterns to copy, `complex` crossing modules or touching design, `normal` the rest. Optional `**Model:**` and `**Effort:**` lines after it pin a model or effort for that session.
+
 <spec-template>
+
+**Complexity:** easy | normal | complex
 
 ## Problem Statement
 
