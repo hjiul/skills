@@ -39,6 +39,9 @@ Skill tool with "tdd" at pre-agreed seams. Light code: build directly. The stand
 `docs/agents/implementer-brief.md`; its "Test by moment" tiers apply: the one test file while iterating, the package
 suite before the commit, the root suite once in step 3.
 
+Before your first edit of a file, read its state (`git status --porcelain -- <file>`): a file already modified holds
+another session's uncommitted lines (other sessions share this checkout). Note it; step 5 refuses to commit it.
+
 ## 3. Checks green
 
 `pnpm check <each project the change touches>`, once (each runs with its project group), plus
@@ -51,7 +54,9 @@ The fix gets a history line on the board: a ticket in the fitting standing folde
 (`groups/<group>/.scratch/<folder>/issues/<NN>-<slug>.md`, next free number; usually `bugs` for a fix, `tasks` for a
 small change; the tracker doc's "Where a ticket goes"). It carries the title, a `**What to build:**` line saying what
 was fixed and why, its `**Project:**` line, `**Status:** done`, `**Complexity:**`, the boxes the fix earned, ticked,
-and a `## Comments` line saying it was fixed in the conversation on `main`, with the date. When no standing folder
+and a `## Comments` line saying it was fixed in the conversation on `main`, with the date. A fix touching a path an
+alma project ships carries its `**Patch:** <name>` line (`docs/agents/implementer-brief.md`, "Patches and the
+commit's trailer"; `bug-fixes` for a bug of no patch, or ask in chat, proposing a name). When no standing folder
 fits, propose one in chat and wait for the user's word. With a ticket path from step 1, close that ticket through the
 tracker doc's **Close** operation instead.
 
@@ -62,13 +67,21 @@ a ticket in the group's `live-checks` (the tracker doc's "Implementation operati
 
 Note the tip first (`git rev-parse HEAD`, the review's fixed point: other sessions may commit on `main` too). Commit
 the fix and the ticket together on `main`, staging explicit paths (`git add <paths>`, never `-A`: other sessions
-share the checkout), with the attribution lines the conversation gives. Do not push yet.
+share the checkout), with the attribution lines the conversation gives and `Ticket: <group> <folder> <NN>` (the ticket
+of step 4) on the line above `Co-Authored-By:` in the same last paragraph: the trailer the patch finds the commit by,
+which the `commit-msg` hook requires on shipped files. Do not push yet.
+
+**Refuse a file that was already modified.** A file step 2 noted as modified before your own edit is not committed:
+its other lines are another session's half-done work, and your ticket would carry them. Stop and tell the user which
+file and which session: the newest transcript that edited it other than yours
+(`grep -l '"file_path":"<absolute path>"' ~/.claude/projects/<this checkout's folder>/*.jsonl`, newest first), named
+by its session id; when none did, the user's own hand edit. Commit the rest only on the user's word.
 
 ## 6. Code review without hard findings
 
 Call the Skill tool with "code-review", the tip noted in step 5 as the fixed point, the ticket as the spec. Done when
 it raises no hard finding (a bug, a broken standard, a gap against the ticket). Findings: fix them, rerun step 3,
-commit the fix with explicit paths, and review again.
+commit the fix with explicit paths and the same `Ticket:` line, and review again.
 
 ## 7. Push
 
