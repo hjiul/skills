@@ -56,9 +56,9 @@ small change; the tracker doc's "Where a ticket goes"). It carries the title, a 
 was fixed and why, its `**Project:**` line, `**Status:** done`, `**Complexity:**`, the boxes the fix earned, ticked,
 and a `## Comments` line saying it was fixed in the conversation on `main`, with the date. A fix touching a path an
 alma project ships carries its `**Patch:** <name>` line (`docs/agents/implementer-brief.md`, "Patches and the
-commit's trailer"; `bug-fixes` for a bug of no patch, or ask in chat, proposing a name). When no standing folder
-fits, propose one in chat and wait for the user's word. With a ticket path from step 1, close that ticket through the
-tracker doc's **Close** operation instead.
+commit's trailer"; `bug-fixes` for a bug of no patch, `mission-updates` for any Mission change, or ask in chat,
+proposing a name). When no standing folder fits, propose one in chat and wait for the user's word. With a ticket
+path from step 1, close that ticket through the tracker doc's **Close** operation instead.
 
 A step only the user can take is a `ready-for-human` ticket of the same folder; a behaviour only a live call proves is
 a ticket in the group's `live-checks` (the tracker doc's "Implementation operations").
