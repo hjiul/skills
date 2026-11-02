@@ -7,7 +7,7 @@ Reference for writing any document an agent consumes: a skill, an `AGENTS.md` / 
 
 When the document you're writing is a skill, read [`SKILL-MECHANICS.md`](SKILL-MECHANICS.md) for frontmatter, invocation choice, and router skills.
 
-When writing or editing a skill in the brainV3 monorepo, also follow the kept practices on `wiki/skills/README.md`.
+When writing or editing a skill in the brainV4 monorepo, also follow the kept practices on `wiki/skills/README.md`.
 
 ## Context pointers
 
